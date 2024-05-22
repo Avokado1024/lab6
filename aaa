@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+using namespace std;
+class ProgrArray{
+private:
+    vector<int> arr;
+    int a;
+    int q;
+    int size;
+public:
+    ProgrArray(const  vector<int>& arr, int q) : arr(arr), size(arr.size()), a(a), q(q) {
+        if (!isValidProgr()) {
+            throw invalid_argument("Invalid Progr");
+        }
+    }
+    bool isValidProgr() const {
+        if (size < 2) {
+            return false;
+        }
+        for (int i = 1; i < size; ++i) {
+            if (arr[i] != arr[i - 1] * q) {
+                return false;
+            }
+        }
+        return true;
+    }
+    void printArray() const {
+        cout << "Progr true: ";
+        for (int i = 0; i < size; ++i) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+int main() {
+    int q = 2;
+    try {
+        vector<int> validProgr = { 2, 4, 8, 16 };
+        ProgrArray validArray(validProgr, q);
+        validArray.printArray();
+        vector<int> invalidProgr = { 0, 1, 1, 2, 4, 5, 8 };
+        ProgrArray invalidArray(invalidProgr, q);
+        invalidArray.printArray();
+    }
+    catch (const  invalid_argument& iskl) {
+        cout << "Caught exception: " << iskl.what() << endl;
+    }
+    return 0;
+}
